@@ -1,0 +1,38 @@
+.contractCollection{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    .menuContent{
+        width: 200px;
+        height: 100%;
+        background-color: black;
+    }
+    .main{
+        height: 100%;
+        width: calc(100% - 200px);
+        background-color: #f5f7f9;
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        box-sizing: border-box;
+        padding-top: 0;
+        .mainHeader{
+            width: 100%;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .title{
+                font-weight: bold;
+            }
+            button{
+                line-height: 0;
+            }
+        }
+        .renderComponent{
+            width: 100%;
+            height: calc(100% - 64px);
+            background-color: #fff;
+        }
+    }
+}
