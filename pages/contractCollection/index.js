@@ -1,11 +1,10 @@
 'use client';
 import { Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
-// import { WalletColorful, WalletWhiteColorful } from '@ant-design/web3-icons';
 import { useState } from 'react';
 import { http } from "wagmi";
 import { Mainnet, WagmiWeb3ConfigProvider, MetaMask, Sepolia } from '@ant-design/web3-wagmi';
-// import { Address, NFTCard, Connector, ConnectButton } from "@ant-design/web3";
+import { Address, NFTCard, Connector, ConnectButton } from "@ant-design/web3";
 
 import styles from './index.module.scss'
 
@@ -71,7 +70,7 @@ export default function ContractCollection() {
                         inlineCollapsed={false}
                     />
                 </div>
-                {/* <div className={styles.main}>
+                <div className={styles.main}>
                     <div className={styles.mainHeader}>
                         <span className={styles.title}>Contract collection</span>
                         <Connector>
@@ -85,10 +84,10 @@ export default function ContractCollection() {
                         </Connector>
                     </div>
 
-                    <div className={styles.renderComponent}>
+                    {/* <div className={styles.renderComponent}>
                          {renderComponentFunc()} 
-                    </div>
-                </div> */}
+                    </div> */}
+                </div>
             </div>
         </WagmiWeb3ConfigProvider>
 
