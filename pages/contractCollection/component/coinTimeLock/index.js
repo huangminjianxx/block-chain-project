@@ -260,13 +260,13 @@ export default function CoinTimeLock() {
 
 
     useEffect(() => {
-        getDepositHistory()
-        startListenDeposit()
-        getWithdrawHistory()
-        startListenWithdraw()
-        return () => {
-            removeListener()
-        }
+        // getDepositHistory()
+        // startListenDeposit()
+        // getWithdrawHistory()
+        // startListenWithdraw()
+        // return () => {
+        //     removeListener()
+        // }
     },[])
 
     return (
@@ -293,7 +293,7 @@ export default function CoinTimeLock() {
             <DepositBtn/>
             <GetUserWithdrawInfor/>
             <WithdrawBtn/> */}
-            <div className={styles.withdrwaHistory}>
+            {/* <div className={styles.withdrwaHistory}>
                 历史存款记录
                 {
                     depositHistory.map(item => {
@@ -320,7 +320,7 @@ export default function CoinTimeLock() {
                         )
                     })
                 }
-            </div>
+            </div> */}
         </div>
         </WagmiWeb3ConfigProvider>
     );
