@@ -8,8 +8,12 @@ import { Mainnet, WagmiWeb3ConfigProvider, MetaMask, Sepolia } from '@ant-design
 import { Address, NFTCard, Connector, ConnectButton } from "@ant-design/web3";
 import Erc20Coin from './component/erc20Coin';
 import styles from './index.module.scss'
-const CoinTimeLock = lazy(() => delayForDemo(import('./component/coinTimeLock/index.js')));
-
+import dynamic from 'next/dynamic'
+// const CoinTimeLock = lazy(() => delayForDemo(import('./component/coinTimeLock/index.js')));
+const CoinTimeLock = dynamic(
+    () => import('./component/coinTimeLock/index.js'),
+    { ssr: false }
+  )
 
 export default function ContractCollection() {
 
