@@ -1,6 +1,6 @@
 'use client';
 // import { Menu } from 'antd';
-// import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
 // import { WalletColorful, WalletWhiteColorful } from '@ant-design/web3-icons';
 // import { useState,lazy } from 'react';
 import { http } from "wagmi";
