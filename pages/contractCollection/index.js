@@ -2,13 +2,14 @@
 import { Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { WalletColorful, WalletWhiteColorful } from '@ant-design/web3-icons';
-import { useState } from 'react';
+import { useState,lazy } from 'react';
 import { http } from "wagmi";
 import { Mainnet, WagmiWeb3ConfigProvider, MetaMask, Sepolia } from '@ant-design/web3-wagmi';
 import { Address, NFTCard, Connector, ConnectButton } from "@ant-design/web3";
 import Erc20Coin from './component/erc20Coin';
-import CoinTimeLock from './component/coinTimeLock';
 import styles from './index.module.scss'
+const CoinTimeLock = lazy(() => delayForDemo(import('./component/coinTimeLock/index.js')));
+
 
 export default function ContractCollection() {
 

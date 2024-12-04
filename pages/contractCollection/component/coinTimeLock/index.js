@@ -24,9 +24,6 @@ const abiWETH = [
 const contract = new ethers.Contract(contractAddress, abiWETH, provider)
 
 export default function CoinTimeLock() {
-
-    
-
     const GetUserWithdrawInfor = () => {
         const { account } = useAccount();
         const withdrawInfor = useReadContract({
