@@ -1,36 +1,36 @@
 'use client';
-import { Menu } from 'antd';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import { WalletColorful, WalletWhiteColorful } from '@ant-design/web3-icons';
-import { useState,lazy } from 'react';
+// import { Menu } from 'antd';
+// import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+// import { WalletColorful, WalletWhiteColorful } from '@ant-design/web3-icons';
+// import { useState,lazy } from 'react';
 import { http } from "wagmi";
 import { Mainnet, WagmiWeb3ConfigProvider, MetaMask, Sepolia } from '@ant-design/web3-wagmi';
-import { Address, NFTCard, Connector, ConnectButton } from "@ant-design/web3";
+// import { Address, NFTCard, Connector, ConnectButton } from "@ant-design/web3";
 
 import styles from './index.module.scss'
 
 
 export default function ContractCollection() {
 
-    const [currentKey, setCurrentKey] = useState('erc20Coin')
+    // const [currentKey, setCurrentKey] = useState('erc20Coin')
 
-    const items = [
-        {
-            key: 'erc20Coin',
-            label: 'ERC20 代币',
-            icon: <MailOutlined />,
-        },
-        {
-            key: 'coinTimeLock',
-            label: '代币时间锁',
-            icon: <AppstoreOutlined />,
-        },
+    // const items = [
+    //     {
+    //         key: 'erc20Coin',
+    //         label: 'ERC20 代币',
+    //         icon: <MailOutlined />,
+    //     },
+    //     {
+    //         key: 'coinTimeLock',
+    //         label: '代币时间锁',
+    //         icon: <AppstoreOutlined />,
+    //     },
 
-    ];
+    // ];
 
-    const selectItem = (item) => {
-        setCurrentKey(item.key)
-    }
+    // const selectItem = (item) => {
+    //     setCurrentKey(item.key)
+    // }
 
     // const renderComponentFunc = () => {
     //     if (currentKey === 'erc20Coin') {
@@ -61,7 +61,7 @@ export default function ContractCollection() {
             wallets={[MetaMask()]}
         >
             <div className={styles.contractCollection}>
-                <div className={styles.menuContent}>
+                {/* <div className={styles.menuContent}>
                     <Menu
                         style={{ height: '100%' }}
                         defaultSelectedKeys={['erc20Coin']}
@@ -86,9 +86,9 @@ export default function ContractCollection() {
                     </div>
 
                     <div className={styles.renderComponent}>
-                        {/* {renderComponentFunc()} */}
+                         {renderComponentFunc()} 
                     </div>
-                </div>
+                </div> */}
             </div>
         </WagmiWeb3ConfigProvider>
 
