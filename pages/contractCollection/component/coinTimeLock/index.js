@@ -260,17 +260,24 @@ export default function CoinTimeLock() {
 
 
     useEffect(() => {
-        // getDepositHistory()
-        // startListenDeposit()
-        // getWithdrawHistory()
-        // startListenWithdraw()
-        // return () => {
-        //     removeListener()
-        // }
+        getDepositHistory()
+        startListenDeposit()
+        getWithdrawHistory()
+        startListenWithdraw()
+        return () => {
+            removeListener()
+        }
     },[])
 
     return (
-       
+      <WagmiWeb3ConfigProvider
+      chains={[Mainnet,Sepolia]}
+      transports={{
+          [Mainnet.id]: http(),
+          [Sepolia.id]: http(),
+      }}
+      wallets={[MetaMask()]}
+  >
         <div className={styles.coinTimeLock}>
             代币时间锁2
             <Input 
@@ -315,5 +322,6 @@ export default function CoinTimeLock() {
                 }
             </div>
         </div>
+        </WagmiWeb3ConfigProvider>
     );
 }
