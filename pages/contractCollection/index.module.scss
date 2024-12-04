@@ -3,13 +3,11 @@
     width: 100vw;
     display: flex;
     .menuContent{
-        width: 200px;
         height: 100%;
-        background-color: black;
     }
     .main{
         height: 100%;
-        width: calc(100% - 200px);
+        flex-grow: 1;
         background-color: #f5f7f9;
         display: flex;
         flex-direction: column;

@@ -52,9 +52,10 @@ export default function ContractCollection() {
 
     return (
         <WagmiWeb3ConfigProvider
-            chains={[Mainnet]}
+            chains={[Mainnet,Sepolia]}
             transports={{
                 [Mainnet.id]: http(),
+                [Sepolia.id]: http(),
             }}
             wallets={[MetaMask()]}
         >
@@ -66,6 +67,7 @@ export default function ContractCollection() {
                         mode="inline"
                         items={items}
                         onSelect={selectItem}
+                        inlineCollapsed={false}
                     />
                 </div>
                 <div className={styles.main}>

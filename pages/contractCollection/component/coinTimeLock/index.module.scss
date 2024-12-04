@@ -1,0 +1,21 @@
+.coinTimeLock{
+    max-height: 100%;
+    overflow-y: scroll;
+    .userWithdrawInfor{
+        height: 300px;
+        width: 600px;
+        background-color: pink;
+        display: flex;
+        flex-direction: column;
+        .userWithdrawItem{
+            
+        }
+    }
+    .withdrwaHistory{
+        width: 600px;
+        background-color: pink;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+}
