@@ -270,14 +270,7 @@ export default function CoinTimeLock() {
     },[])
 
     return (
-        <WagmiWeb3ConfigProvider
-            chains={[Mainnet,Sepolia]}
-            transports={{
-                [Mainnet.id]: http(),
-                [Sepolia.id]: http(),
-            }}
-            wallets={[MetaMask()]}
-        >
+       
         <div className={styles.coinTimeLock}>
             {/* 代币时间锁2
             <Input 
@@ -322,6 +315,5 @@ export default function CoinTimeLock() {
                 }
             </div> */}
         </div>
-        </WagmiWeb3ConfigProvider>
     );
 }
