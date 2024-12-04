@@ -46,9 +46,10 @@ export default function ContractCollection() {
             )
         } else if (currentKey === 'coinTimeLock') {
             return (
-                <CoinTimeLock
+                // <CoinTimeLock
 
-                />
+                // />
+                <div>kong</div>
             )
         } else {
             return null
