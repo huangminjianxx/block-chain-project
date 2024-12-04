@@ -7,7 +7,8 @@ import { Mainnet, WagmiWeb3ConfigProvider, MetaMask, Sepolia } from '@ant-design
 import { Address, NFTCard, Connector, ConnectButton } from "@ant-design/web3";
 
 import styles from './index.module.scss'
-
+import Erc20Coin from './component/erc20Coin/index'
+import CoinTimeLock from './component/coinTimeLock/index'
 
 export default function ContractCollection() {
 
@@ -31,24 +32,24 @@ export default function ContractCollection() {
         setCurrentKey(item.key)
     }
 
-    // const renderComponentFunc = () => {
-    //     if (currentKey === 'erc20Coin') {
-    //         return (
-    //             <Erc20Coin
+    const renderComponentFunc = () => {
+        if (currentKey === 'erc20Coin') {
+            return (
+                <Erc20Coin
 
-    //             />
-    //         )
-    //     } else if (currentKey === 'coinTimeLock') {
-    //         return (
-    //             // <CoinTimeLock
+                />
+            )
+        } else if (currentKey === 'coinTimeLock') {
+            return (
+                <CoinTimeLock
 
-    //             // />
-    //             <div>kong</div>
-    //         )
-    //     } else {
-    //         return null
-    //     }
-    // }
+                />
+                
+            )
+        } else {
+            return null
+        }
+    }
 
     return (
         <WagmiWeb3ConfigProvider
@@ -84,9 +85,9 @@ export default function ContractCollection() {
                         </Connector>
                     </div>
 
-                    {/* <div className={styles.renderComponent}>
+                    <div className={styles.renderComponent}>
                          {renderComponentFunc()} 
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </WagmiWeb3ConfigProvider>
