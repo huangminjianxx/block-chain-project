@@ -3,6 +3,65 @@
 //第二次：0x00d145eFdabcAa7d772755C4E4258562F8cd97EC
 //0x80605Ec7AFF7D602Cdff13f74693143F89cd8312
 //0x74f3b3e6D0af640Df0DD1595845760EE2a5372E0
+const getUserWithdrawInforAbi = [
+    {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "acount",
+            "type": "address"
+          }
+        ],
+        "name": "getUserWithdrawInfor",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "moneyAmount",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "withdrawTime",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct TimeLock.UserInfor[]",
+            "name": "",
+            "type": "tuple[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+]
+
+const depositAbi = [
+    {
+      type: "function",
+      name: "deposit",
+      stateMutability: "payable",
+      inputs: [
+        {
+          internalType: "uint256",
+          name: "time",
+          type: "uint256",
+        },
+      ],
+      outputs: [],
+    },
+]
+
+const withdrawAbi = [
+    {
+        "inputs": [],
+        "name": "withdraw",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    }
+  ]
 import { useEffect, useState , useCallback} from 'react';
 import { parseEther } from "viem";
 import { BigNumber, ethers } from "ethers";
@@ -11,7 +70,7 @@ import { http, useReadContract, useWriteContract } from "wagmi";
 import { useAccount } from "@ant-design/web3";
 import { Mainnet, WagmiWeb3ConfigProvider, MetaMask, Sepolia } from '@ant-design/web3-wagmi';
 import dayjs from 'dayjs';
-import { getUserWithdrawInforAbi, depositAbi , withdrawAbi } from '../../../../components/abi'
+// import { getUserWithdrawInforAbi, depositAbi , withdrawAbi } from '../../../../components/abi'
 import styles from './index.module.scss'
 import moment from 'moment';
 const contractAddress = "0x74f3b3e6D0af640Df0DD1595845760EE2a5372E0"
