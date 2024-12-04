@@ -279,7 +279,7 @@ export default function CoinTimeLock() {
             wallets={[MetaMask()]}
         >
         <div className={styles.coinTimeLock}>
-            代币时间锁2
+            {/* 代币时间锁2
             <Input 
                 value={moneyInput}
                 onChange={addressChange}
@@ -292,7 +292,7 @@ export default function CoinTimeLock() {
             /><br/>
             <DepositBtn/>
             <GetUserWithdrawInfor/>
-            <WithdrawBtn/>
+            <WithdrawBtn/> */}
             <div className={styles.withdrwaHistory}>
                 历史存款记录
                 {
