@@ -14,19 +14,19 @@ export default function ContractCollection() {
 
     // const [currentKey, setCurrentKey] = useState('erc20Coin')
 
-    // const items = [
-    //     {
-    //         key: 'erc20Coin',
-    //         label: 'ERC20 代币',
-    //         icon: <MailOutlined />,
-    //     },
-    //     {
-    //         key: 'coinTimeLock',
-    //         label: '代币时间锁',
-    //         icon: <AppstoreOutlined />,
-    //     },
+    const items = [
+        {
+            key: 'erc20Coin',
+            label: 'ERC20 代币',
+            icon: <MailOutlined />,
+        },
+        {
+            key: 'coinTimeLock',
+            label: '代币时间锁',
+            icon: <AppstoreOutlined />,
+        },
 
-    // ];
+    ];
 
     // const selectItem = (item) => {
     //     setCurrentKey(item.key)
@@ -61,7 +61,7 @@ export default function ContractCollection() {
             wallets={[MetaMask()]}
         >
             <div className={styles.contractCollection}>
-                {/* <div className={styles.menuContent}>
+                <div className={styles.menuContent}>
                     <Menu
                         style={{ height: '100%' }}
                         defaultSelectedKeys={['erc20Coin']}
@@ -71,7 +71,7 @@ export default function ContractCollection() {
                         inlineCollapsed={false}
                     />
                 </div>
-                <div className={styles.main}>
+                {/* <div className={styles.main}>
                     <div className={styles.mainHeader}>
                         <span className={styles.title}>Contract collection</span>
                         <Connector>
