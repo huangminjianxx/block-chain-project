@@ -83,191 +83,191 @@ const abiWETH = [
 const contract = new ethers.Contract(contractAddress, abiWETH, provider)
 
 export default function CoinTimeLock() {
-    const GetUserWithdrawInfor = () => {
-        const { account } = useAccount();
-        const withdrawInfor = useReadContract({
-            abi: getUserWithdrawInforAbi,
-            address: contractAddress,
-            functionName: 'getUserWithdrawInfor',
-            args: [account?.address],
-            chainId:Sepolia.id
-        })
-        const [, updateState] = useState();
-        const forceUpdate = useCallback(() => updateState({}), []);
+    // const GetUserWithdrawInfor = () => {
+    //     const { account } = useAccount();
+    //     const withdrawInfor = useReadContract({
+    //         abi: getUserWithdrawInforAbi,
+    //         address: contractAddress,
+    //         functionName: 'getUserWithdrawInfor',
+    //         args: [account?.address],
+    //         chainId:Sepolia.id
+    //     })
+    //     const [, updateState] = useState();
+    //     const forceUpdate = useCallback(() => updateState({}), []);
 
-        const list = withdrawInfor.data || []
-        return (
-            <div className={styles.userWithdrawInfor}>
-                <span onClick={forceUpdate}>刷新</span>
-                {
-                    list.length ?
-                    list.map(item => {
-                        return (
-                            <div className={styles.userWithdrawItem}>
-                                {moment.unix(item.withdrawTime.toString()).format('YYYY-MM-DD HH:mm:ss')}
-                                后可以领取
-                                <span>{ethers.utils.formatEther(item.moneyAmount)}</span>eth
-                            </div>
-                        )
-                    }) : '暂无存款信息'
-                }
-            </div>
-        )
-    }
+    //     const list = withdrawInfor.data || []
+    //     return (
+    //         <div className={styles.userWithdrawInfor}>
+    //             <span onClick={forceUpdate}>刷新</span>
+    //             {
+    //                 list.length ?
+    //                 list.map(item => {
+    //                     return (
+    //                         <div className={styles.userWithdrawItem}>
+    //                             {moment.unix(item.withdrawTime.toString()).format('YYYY-MM-DD HH:mm:ss')}
+    //                             后可以领取
+    //                             <span>{ethers.utils.formatEther(item.moneyAmount)}</span>eth
+    //                         </div>
+    //                     )
+    //                 }) : '暂无存款信息'
+    //             }
+    //         </div>
+    //     )
+    // }
 
-    const [moneyInput,setMoneyInput] = useState('')
-    const addressChange = (e) => {
-        setMoneyInput(e.target.value)
-    }
+    // const [moneyInput,setMoneyInput] = useState('')
+    // const addressChange = (e) => {
+    //     setMoneyInput(e.target.value)
+    // }
 
-    const [timeInput,setTimeInput] = useState('')
-    const dateOnChange = (date,dateString) => {
-        setTimeInput(new Date(date).getTime()/1000)
-    }
+    // const [timeInput,setTimeInput] = useState('')
+    // const dateOnChange = (date,dateString) => {
+    //     setTimeInput(new Date(date).getTime()/1000)
+    // }
 
-    const DepositBtn = () => {
-        const { writeContract } = useWriteContract();
-        const startDeposit = () => {
-            writeContract(
-                {
-                  abi: depositAbi,
-                  address: contractAddress,
-                  functionName: "deposit",
-                  args: [timeInput],
-                  value: parseEther(moneyInput),
-                  chainId:Sepolia.id
-                },
-                {
-                  onSuccess: () => {
-                    console.log("Success")
-                  },
-                  onError: (err) => {
-                    console.log("fail",err)
-                  },
-                }
-            );
-        }
-          return (
-            <Button onClick={startDeposit}>存入</Button>
-          )
-    }
+    // const DepositBtn = () => {
+    //     const { writeContract } = useWriteContract();
+    //     const startDeposit = () => {
+    //         writeContract(
+    //             {
+    //               abi: depositAbi,
+    //               address: contractAddress,
+    //               functionName: "deposit",
+    //               args: [timeInput],
+    //               value: parseEther(moneyInput),
+    //               chainId:Sepolia.id
+    //             },
+    //             {
+    //               onSuccess: () => {
+    //                 console.log("Success")
+    //               },
+    //               onError: (err) => {
+    //                 console.log("fail",err)
+    //               },
+    //             }
+    //         );
+    //     }
+    //       return (
+    //         <Button onClick={startDeposit}>存入</Button>
+    //       )
+    // }
 
-    const WithdrawBtn = () => {
-        const { writeContract } = useWriteContract();
-        const startWithdraw = () => {
-            writeContract(
-                {
-                  abi: withdrawAbi,
-                  address: contractAddress,
-                  functionName: "withdraw",
-                  args: [],
-                  value: "",
-                  chainId:Sepolia.id
-                },
-                {
-                  onSuccess: () => {
-                    console.log("Success")
-                  },
-                  onError: (err) => {
-                    console.log("fail",err)
-                  },
-                }
-            );
-        }
-        return (
-            <Button onClick={startWithdraw}>取款</Button>
-        )
-    }
+    // const WithdrawBtn = () => {
+    //     const { writeContract } = useWriteContract();
+    //     const startWithdraw = () => {
+    //         writeContract(
+    //             {
+    //               abi: withdrawAbi,
+    //               address: contractAddress,
+    //               functionName: "withdraw",
+    //               args: [],
+    //               value: "",
+    //               chainId:Sepolia.id
+    //             },
+    //             {
+    //               onSuccess: () => {
+    //                 console.log("Success")
+    //               },
+    //               onError: (err) => {
+    //                 console.log("fail",err)
+    //               },
+    //             }
+    //         );
+    //     }
+    //     return (
+    //         <Button onClick={startWithdraw}>取款</Button>
+    //     )
+    // }
 
-    //历史存款记录
-    const [depositHistory,setDepositHistory] = useState([])
-    const getDepositHistory = async () => {
-        const block = await provider.getBlockNumber()
-        const depositEvents = await contract.queryFilter('UserDeposit', 0, block)
-        const depositEventsLength = depositEvents.length;
-        const tempDepositHistory = []
-        for(let i=depositEventsLength - 1;i<depositEventsLength && i > 0;i--){
-            if(tempDepositHistory.length <= 10){
-                const item = depositEvents[i]
-                const tempItem = {
-                    address:item.args[0],
-                    depositTime:moment.unix(item.args["lockTime"].toString()).format('YYYY-MM-DD HH:mm:ss'),
-                    amount:ethers.utils.formatEther(item.args["amount"])
-                }
-                tempDepositHistory.push(tempItem)
-            }else{
-                break;
-            }
-        }
-        setDepositHistory(tempDepositHistory)
-    }
-    const startListenDeposit = useCallback(() => {
-        contract.on("UserDeposit", (origin,amount,lockTime) => {
-            setDepositHistory((preList) => {
-                const tempDepositHistory = JSON.parse(JSON.stringify(preList))
-                const tempItem = {
-                    address:origin,
-                    depositTime:moment.unix(lockTime.toString()).format('YYYY-MM-DD HH:mm:ss'),
-                    amount:ethers.utils.formatEther(amount)
-                }
-                tempDepositHistory.push(tempItem)
-                return tempDepositHistory
-            })
-        })
-    },[])
+    // //历史存款记录
+    // const [depositHistory,setDepositHistory] = useState([])
+    // const getDepositHistory = async () => {
+    //     const block = await provider.getBlockNumber()
+    //     const depositEvents = await contract.queryFilter('UserDeposit', 0, block)
+    //     const depositEventsLength = depositEvents.length;
+    //     const tempDepositHistory = []
+    //     for(let i=depositEventsLength - 1;i<depositEventsLength && i > 0;i--){
+    //         if(tempDepositHistory.length <= 10){
+    //             const item = depositEvents[i]
+    //             const tempItem = {
+    //                 address:item.args[0],
+    //                 depositTime:moment.unix(item.args["lockTime"].toString()).format('YYYY-MM-DD HH:mm:ss'),
+    //                 amount:ethers.utils.formatEther(item.args["amount"])
+    //             }
+    //             tempDepositHistory.push(tempItem)
+    //         }else{
+    //             break;
+    //         }
+    //     }
+    //     setDepositHistory(tempDepositHistory)
+    // }
+    // const startListenDeposit = useCallback(() => {
+    //     contract.on("UserDeposit", (origin,amount,lockTime) => {
+    //         setDepositHistory((preList) => {
+    //             const tempDepositHistory = JSON.parse(JSON.stringify(preList))
+    //             const tempItem = {
+    //                 address:origin,
+    //                 depositTime:moment.unix(lockTime.toString()).format('YYYY-MM-DD HH:mm:ss'),
+    //                 amount:ethers.utils.formatEther(amount)
+    //             }
+    //             tempDepositHistory.push(tempItem)
+    //             return tempDepositHistory
+    //         })
+    //     })
+    // },[])
 
-    //历史取款记录
-    const [withdrawHistory,setWithdrawHistory] = useState([])
-    const getWithdrawHistory = async () => {
-        const block = await provider.getBlockNumber()
-        const withdrawEvents = await contract.queryFilter('UserWithdraw', 0, block)
-        const withdrawEventsLength = withdrawEvents.length;
-        const tempWithdrawHistory = []
-        for(let i=withdrawEventsLength - 1;i<withdrawEventsLength && i >= 0;i--){
-            if(tempWithdrawHistory.length <= 10){
-                const item = withdrawEvents[i]
-                const tempItem = {
-                    address:item.args[0],
-                    withdrawTime:moment.unix(item.args["withdrawTime"].toString()).format('YYYY-MM-DD HH:mm:ss'),
-                    amount:ethers.utils.formatEther(item.args["amount"])
-                }
-                tempWithdrawHistory.push(tempItem)
-            }else{
-                break;
-            }
-        }
-        setWithdrawHistory(tempWithdrawHistory)
-    }
-    const startListenWithdraw = () => {
-        contract.on("UserWithdraw", (origin,amount,withdrawTime) => {
-            setWithdrawHistory((preList) => {
-                const tempWithdrawHistory = JSON.parse(JSON.stringify(preList))
-                const tempItem = {
-                    address:origin,
-                    depositTime:moment.unix(withdrawTime.toString()).format('YYYY-MM-DD HH:mm:ss'),
-                    amount:ethers.utils.formatEther(amount)
-                }
-                tempWithdrawHistory.push(tempItem)
-                return tempWithdrawHistory
-            })
-        })
-    }
+    // //历史取款记录
+    // const [withdrawHistory,setWithdrawHistory] = useState([])
+    // const getWithdrawHistory = async () => {
+    //     const block = await provider.getBlockNumber()
+    //     const withdrawEvents = await contract.queryFilter('UserWithdraw', 0, block)
+    //     const withdrawEventsLength = withdrawEvents.length;
+    //     const tempWithdrawHistory = []
+    //     for(let i=withdrawEventsLength - 1;i<withdrawEventsLength && i >= 0;i--){
+    //         if(tempWithdrawHistory.length <= 10){
+    //             const item = withdrawEvents[i]
+    //             const tempItem = {
+    //                 address:item.args[0],
+    //                 withdrawTime:moment.unix(item.args["withdrawTime"].toString()).format('YYYY-MM-DD HH:mm:ss'),
+    //                 amount:ethers.utils.formatEther(item.args["amount"])
+    //             }
+    //             tempWithdrawHistory.push(tempItem)
+    //         }else{
+    //             break;
+    //         }
+    //     }
+    //     setWithdrawHistory(tempWithdrawHistory)
+    // }
+    // const startListenWithdraw = () => {
+    //     contract.on("UserWithdraw", (origin,amount,withdrawTime) => {
+    //         setWithdrawHistory((preList) => {
+    //             const tempWithdrawHistory = JSON.parse(JSON.stringify(preList))
+    //             const tempItem = {
+    //                 address:origin,
+    //                 depositTime:moment.unix(withdrawTime.toString()).format('YYYY-MM-DD HH:mm:ss'),
+    //                 amount:ethers.utils.formatEther(amount)
+    //             }
+    //             tempWithdrawHistory.push(tempItem)
+    //             return tempWithdrawHistory
+    //         })
+    //     })
+    // }
 
-    const removeListener = () => {
-        contract.removeAllListeners("UserDeposit");
-        contract.removeAllListeners("UserWithdraw");
-    }
+    // const removeListener = () => {
+    //     contract.removeAllListeners("UserDeposit");
+    //     contract.removeAllListeners("UserWithdraw");
+    // }
 
 
-    useEffect(() => {
-        // getDepositHistory()
-        // startListenDeposit()
-        // getWithdrawHistory()
-        // startListenWithdraw()
-        // return () => {
-        //     removeListener()
-        // }
-    },[])
+    // useEffect(() => {
+    //     // getDepositHistory()
+    //     // startListenDeposit()
+    //     // getWithdrawHistory()
+    //     // startListenWithdraw()
+    //     // return () => {
+    //     //     removeListener()
+    //     // }
+    // },[])
 
     return (
        
