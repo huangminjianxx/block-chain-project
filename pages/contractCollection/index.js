@@ -1,5 +1,5 @@
 'use client';
-// import { Menu } from 'antd';
+import { Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
 // import { WalletColorful, WalletWhiteColorful } from '@ant-design/web3-icons';
 // import { useState,lazy } from 'react';
@@ -12,7 +12,7 @@ import styles from './index.module.scss'
 
 export default function ContractCollection() {
 
-    // const [currentKey, setCurrentKey] = useState('erc20Coin')
+    const [currentKey, setCurrentKey] = useState('erc20Coin')
 
     const items = [
         {
@@ -28,9 +28,9 @@ export default function ContractCollection() {
 
     ];
 
-    // const selectItem = (item) => {
-    //     setCurrentKey(item.key)
-    // }
+    const selectItem = (item) => {
+        setCurrentKey(item.key)
+    }
 
     // const renderComponentFunc = () => {
     //     if (currentKey === 'erc20Coin') {
