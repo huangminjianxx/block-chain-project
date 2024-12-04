@@ -22,5 +22,8 @@
     "sass": "^1.81.0",
     "viem": "^2.21.15",
     "wagmi": "^2.12.14"
+  },
+  "resolutions": {
+    "react-countup/countup.js": "2.5.0"
   }
 }
