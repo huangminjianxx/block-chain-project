@@ -8,10 +8,10 @@ import { parseEther } from "viem";
 import { BigNumber, ethers } from "ethers";
 import { Input, DatePicker, Button } from 'antd';
 import { http, useReadContract, useWriteContract } from "wagmi";
+import { useAccount } from "@ant-design/web3";
 import { Mainnet, WagmiWeb3ConfigProvider, MetaMask, Sepolia } from '@ant-design/web3-wagmi';
-import { Address, NFTCard, ConnectButton, Connector, useAccount } from "@ant-design/web3";
 import dayjs from 'dayjs';
-import { getUserWithdrawInforAbi, depositAbi , withdrawAbi } from './abi'
+import { getUserWithdrawInforAbi, depositAbi , withdrawAbi } from '../../../../components/abi'
 import styles from './index.module.scss'
 import moment from 'moment';
 const contractAddress = "0x74f3b3e6D0af640Df0DD1595845760EE2a5372E0"
@@ -25,9 +25,9 @@ const contract = new ethers.Contract(contractAddress, abiWETH, provider)
 
 export default function CoinTimeLock() {
 
-    const { writeContract } = useWriteContract();
+    
 
-    const GetUserWithdrawInfor = useCallback(() => {
+    const GetUserWithdrawInfor = () => {
         const { account } = useAccount();
         const withdrawInfor = useReadContract({
             abi: getUserWithdrawInforAbi,
@@ -36,7 +36,6 @@ export default function CoinTimeLock() {
             args: [account?.address],
             chainId:Sepolia.id
         })
-
         const [, updateState] = useState();
         const forceUpdate = useCallback(() => updateState({}), []);
 
@@ -58,7 +57,7 @@ export default function CoinTimeLock() {
                 }
             </div>
         )
-    },[])
+    }
 
     const [moneyInput,setMoneyInput] = useState('')
     const addressChange = (e) => {
@@ -70,48 +69,59 @@ export default function CoinTimeLock() {
         setTimeInput(new Date(date).getTime()/1000)
     }
 
-    const deposit = () => {
-        writeContract(
-            {
-              abi: depositAbi,
-              address: contractAddress,
-              functionName: "deposit",
-              args: [timeInput],
-              value: parseEther(moneyInput),
-              chainId:Sepolia.id
-            },
-            {
-              onSuccess: () => {
-                console.log("Success")
-              },
-              onError: (err) => {
-                console.log("fail",err)
-              },
-            }
-          );
+    const DepositBtn = () => {
+        const { writeContract } = useWriteContract();
+        const startDeposit = () => {
+            writeContract(
+                {
+                  abi: depositAbi,
+                  address: contractAddress,
+                  functionName: "deposit",
+                  args: [timeInput],
+                  value: parseEther(moneyInput),
+                  chainId:Sepolia.id
+                },
+                {
+                  onSuccess: () => {
+                    console.log("Success")
+                  },
+                  onError: (err) => {
+                    console.log("fail",err)
+                  },
+                }
+            );
+        }
+          return (
+            <Button onClick={startDeposit}>存入</Button>
+          )
     }
 
-    const withdraw = () => {
-        writeContract(
-            {
-              abi: withdrawAbi,
-              address: contractAddress,
-              functionName: "withdraw",
-              args: [],
-              value: "",
-              chainId:Sepolia.id
-            },
-            {
-              onSuccess: () => {
-                console.log("Success")
-              },
-              onError: (err) => {
-                console.log("fail",err)
-              },
-            }
-        );
+    const WithdrawBtn = () => {
+        const { writeContract } = useWriteContract();
+        const startWithdraw = () => {
+            writeContract(
+                {
+                  abi: withdrawAbi,
+                  address: contractAddress,
+                  functionName: "withdraw",
+                  args: [],
+                  value: "",
+                  chainId:Sepolia.id
+                },
+                {
+                  onSuccess: () => {
+                    console.log("Success")
+                  },
+                  onError: (err) => {
+                    console.log("fail",err)
+                  },
+                }
+            );
+        }
+        return (
+            <Button onClick={startWithdraw}>取款</Button>
+        )
     }
-
 
     //历史存款记录
     const [depositHistory,setDepositHistory] = useState([])
@@ -204,6 +214,14 @@ export default function CoinTimeLock() {
     },[])
 
     return (
+        <WagmiWeb3ConfigProvider
+            chains={[Mainnet,Sepolia]}
+            transports={{
+                [Mainnet.id]: http(),
+                [Sepolia.id]: http(),
+            }}
+            wallets={[MetaMask()]}
+        >
         <div className={styles.coinTimeLock}>
             代币时间锁2
             <Input 
@@ -216,9 +234,9 @@ export default function CoinTimeLock() {
                 onChange={dateOnChange}
                 showTime={{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }}
             /><br/>
-            <Button onClick={deposit}>存入</Button>
+            <DepositBtn/>
             <GetUserWithdrawInfor/>
-            <Button onClick={withdraw}>取款</Button>
+            <WithdrawBtn/>
             <div className={styles.withdrwaHistory}>
                 历史存款记录
                 {
@@ -248,5 +266,6 @@ export default function CoinTimeLock() {
                 }
             </div>
         </div>
+        </WagmiWeb3ConfigProvider>
     );
 }
